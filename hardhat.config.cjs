@@ -15,6 +15,10 @@ module.exports = {
     },
     hardhat: {
       hardfork: "prague",
+      accounts: {
+        count: 20,
+        accountsBalance: "10000000000000000000000"
+      }
     },
     localhost: {
       url: "http://127.0.0.1:8545",
