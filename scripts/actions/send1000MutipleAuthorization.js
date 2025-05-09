@@ -13,7 +13,7 @@ export const send1000MutipleAuthorization = async () => {
     })
     console.log(`relayerWallet: ${relayerWallet.address}`)
     
-    const totalCount = 160
+    const totalCount = 150
 
     console.log(`Creating ${totalCount} accounts...`)
     const wallets = await createAccounts(totalCount)
@@ -71,4 +71,24 @@ export const send1000MutipleAuthorization = async () => {
     })
     console.log("Transaction hash:", tx)
     console.log("Number of authorizations included:", authorizations.length)
+
+    // Wait for transaction to be mined
+    console.log("Waiting for transaction to be mined...")
+    await publicClient.waitForTransactionReceipt({ hash: tx })
+
+    // Check account codes
+    console.log("\nChecking account codes...")
+    let accountsWithCode = 0
+    for (let i = 0; i < wallets.length; i++) {
+        const code = await publicClient.getBytecode({ address: wallets[i].address })
+        console.log(`Account ${i + 1}: ${wallets[i].address} - Code: ${code ? 'Has code' : 'No code'}`)
+        if (code) accountsWithCode++
+    }
+
+    console.log(`\nSummary: ${accountsWithCode} out of ${wallets.length} accounts have code`)
+    if (accountsWithCode === wallets.length) {
+        console.log("✅ All accounts have code!")
+    } else {
+        console.log(`❌ Only ${accountsWithCode} accounts have code`)
+    }
 } 

@@ -1,8 +1,5 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
-const { createWalletClient, http, parseAbi, createPublicClient } = require('viem')
-const { privateKeyToAccount } = require('viem/accounts')
-const env = require('../.env')
 
 describe("Counter", function () {
   let counter;
@@ -70,50 +67,6 @@ describe("Counter", function () {
         newCounter,
         "NotInitialized"
       );
-    });
-
-    it.only("Test Type 4 in hardhat", async function () {
-      const wallet1 = privateKeyToAccount('0x' + process.env.USER1_PRIVATE_KEY)
-      // setup holesky chain
-      const holesky = {
-        id: 17000,
-        name: 'Holesky',
-        rpcUrls: {
-          default: {
-            http: ['https://eth-holesky.g.alchemy.com/v2/skSSwajFv3eJH3DG25u0Q6OSrzMGl9sc'],
-          },
-        },
-        nativeCurrency: {
-          name: 'Holesky',
-          symbol: 'ETH',
-          decimals: 18,
-        },
-        blockExplorerUrls: {
-          default: {
-            name: 'Holesky',
-            url: 'https://holesky.etherscan.io',
-          },
-        },
-      }
-
-      const walletClient1 = createWalletClient({
-        account: wallet1,
-        chain: holesky,
-        transport: http()
-      })
-
-      console.log("help another eoa to send authorization transaction...")
-      const auth = await walletClient1.signAuthorization({
-        contractAddress: '0xdd6FC9880233a397e0De7c1110F8E2bCAa0956f3',
-        executor: 'self'
-      })
-
-      const tx = await walletClient1.sendTransaction({
-        to: wallet1.address,
-        value: 0n,
-        authorizationList: [auth]
-      })
-      console.log("tx hash:", tx)
     });
   });
 }); 
