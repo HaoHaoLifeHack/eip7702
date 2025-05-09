@@ -1,0 +1,24 @@
+{
+  "name": "eip7702",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy": "hardhat run scripts/deployment/deploy.mjs --network holesky",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "test:type4": "hardhat run scripts/testType4Tx.js --network sepolia"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.5.0",
+    "hardhat": "^2.24.0"
+  },
+  "dependencies": {
+    "viem": "^2.24.0"
+  }
+}
